@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,5 @@ Route::prefix('work')
     Route::patch('/update/{id}', 'update')->name('work.update');
     Route::delete('/{id}', 'destroy')->name('work.delete');
 });
+
+Route::post('/contact', [ContactController::class, 'store']);
