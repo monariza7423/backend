@@ -11,8 +11,7 @@ class News extends Model
 
     protected $fillable = [
         'title',
-        'text',
-        'avatar',
+        'html_content',
     ];
 
     public function getAvatarUrlAttribute()

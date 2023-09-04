@@ -14,16 +14,12 @@ class NewsController extends Controller
     }
 
     public function create(Request $request) {
-        $news = new News();
-        $news->title = $request->input('title');
-        $news->text = $request->input('text');
-        if ($request->hasFile('avatar')){
-            $imagePath = $request->file('avatar')->store('images', 'public');
-            $news->avatar = $imagePath;
-        }
-        $news->created_at = now();
+        $news = new News;
+        $news->title = $request->title;
+        $news->html_content = $request->html_content;
         $news->save();
-        return response()->json(News::all());
+
+        return response()->json($news);
     }
 
     public function show($id){
@@ -38,7 +34,7 @@ class NewsController extends Controller
         $news->text = $request->input('text');
         $news->avatar = $request->input('avatar');
         $news->updated_at =now();
-        $news->save();
+        $news->fill($data)->save();
         return response()->json($news);
     }
 
