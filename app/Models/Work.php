@@ -12,5 +12,6 @@ class Work extends Model
     protected $fillable = [
         'title',
         'text',
+        'avatar',
     ];
 }

@@ -7,8 +7,9 @@ use App\Models\News;
 
 class NewsController extends Controller
 {
-    public function index() {
-        $news = News::all();
+    public function index(Request $request) {
+        $limit = $request->input('limit', 3);
+        $news = News::take($limit)->get();
         return response()->json($news);
     }
 
@@ -17,7 +18,7 @@ class NewsController extends Controller
         $news->title = $request->input('title');
         $news->text = $request->input('text');
         if ($request->hasFile('avatar')){
-            $imagePath = $request->file('avatar') -> store('images', 'public');
+            $imagePath = $request->file('avatar')->store('images', 'public');
             $news->avatar = $imagePath;
         }
         $news->created_at = now();

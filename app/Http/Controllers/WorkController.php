@@ -7,21 +7,22 @@ use App\Models\Work;
 
 class WorkController extends Controller
 {
-    public function index() {
-        $works = Work::all();
+    public function index(Request $request) {
+        $limit = $request->input('limit', 6);
+        $works = Work::take($limit)->get();
         return response()->json($works);
     }
 
     public function create(Request $request) {
-        $work = new Work();
-        $work->title = $request->input('title');
-        $work->text = $request->input('text');
+        $data = $request->only('title', 'text');
+
         if ($request->hasFile('avatar')){
-            $imagePath = $request->file('avatar') -> store('images', 'public');
-            $work->avatar = $imagePath;
+            $imagePath = $request->file('avatar')->store('images', 'public');
+            $data['avatar'] = $imagePath;
         }
-        $work->created_at = now();
-        $work->save();
+
+        $data['created_at'] = now();
+        Work::create($data);
         return response()->json(Work::all());
     }
 
@@ -31,7 +32,7 @@ class WorkController extends Controller
         $work->text = $request->input('text');
         $work->avatar = $request->input('avatar');
         $work->updated_at =now();
-        $work->save();
+        $work->fill($data)->save();
         return response()->json($work);
     }
 
