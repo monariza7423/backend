@@ -16,9 +16,9 @@ class WorkController extends Controller
     public function create(Request $request) {
         $data = $request->only('title', 'text');
 
-        if ($request->hasFile('avatar')){
-            $imagePath = $request->file('avatar')->store('images', 'public');
-            $data['avatar'] = $imagePath;
+        if ($request->hasFile('image_url')){
+            $imagePath = $request->file('image_url')->store('images', 'public');
+            $data['image_url'] = $imagePath;
         }
 
         $data['created_at'] = now();
@@ -30,7 +30,7 @@ class WorkController extends Controller
         $work = Work::find($id);
         $work->title = $request->input('title');
         $work->text = $request->input('text');
-        $work->avatar = $request->input('avatar');
+        $work->image_url = $request->input('image_url');
         $work->updated_at =now();
         $work->fill($data)->save();
         return response()->json($work);
