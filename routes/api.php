@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('news')
 ->controller(NewsController::class)
-->group(function() {
+->group(function () {
     Route::get('/', 'index')->name('news.index');
     Route::get('/create', 'create')->name('news.create');
     Route::post('/', 'create')->name('news.store');
@@ -36,7 +36,7 @@ Route::prefix('news')
 
 Route::prefix('work')
 ->controller(WorkController::class)
-->group(function(){
+->group(function () {
     Route::get('/', 'index')->name('work.index');
     Route::get('/create', 'create')->name('work.create');
     Route::post('/', 'create')->name('work.store');
